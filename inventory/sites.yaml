@@ -1,0 +1,107 @@
+# ---------------------------------------------------------------------------
+# SINGLE SOURCE OF TRUTH for the 3-office Fortinet Security Fabric.
+# Every FortiOS config in ../configs is GENERATED from this file
+# (python3 generator/generate.py). Edit here, never in the .conf files.
+#
+# Values marked  # CHANGE  are placeholders (RFC 5737 documentation
+# addresses, example domain) and must be replaced with real data.
+# ---------------------------------------------------------------------------
+
+global:
+  company: "Acme Digital"                  # CHANGE company name
+  domain: "corp.acmedigital.local"         # CHANGE AD DNS domain
+  ldap_base_dn: "DC=corp,DC=acmedigital,DC=local"   # CHANGE
+  ldap_bind_dn: "CN=svc-fortigate,OU=Service Accounts,DC=corp,DC=acmedigital,DC=local"  # CHANGE
+  fortios_target: "7.6.7"                  # mature 7.6 branch (EoS Jan-2030)
+  bgp_as: 65000                            # private iBGP AS (full mesh, 3 peers)
+  overlay_supernet: "10.255.0.0/24"        # /30 per site-to-site tunnel
+  loopback_supernet: "10.255.255.0/24"     # BGP / health-check loopbacks
+  ntp_servers: ["pool.ntp.org"]
+  public_dns: ["96.45.45.45", "96.45.46.46"]   # FortiGuard DNS (secure DNS)
+  internet_sla_targets: ["1.1.1.1", "8.8.8.8"]
+  fortianalyzer: "fortianalyzer-cloud"     # FortiAnalyzer Cloud (logging/SOC)
+  fortimanager: "fortimanager-cloud"       # FortiManager Cloud (central mgmt)
+  ems: "forticlient-ems-cloud"             # FortiClient EMS Cloud (endpoint/ZTNA)
+  mfa: "fortiidentity-cloud"               # FortiIdentity Cloud (FortiToken Mobile, works across all 3 FortiGates)
+  remote_access:
+    ike_version: 2
+    transport: auto                        # UDP 500/4500, falls back to TCP if UDP blocked
+    ike_tcp_port: 443                      # admin GUI is NOT on WAN, so 443 is free for IKE-TCP
+    eap_method: "EAP-TTLS"                 # required for LDAP auth with IKEv2 (FortiClient/EMS >= 7.4.4)
+    split_tunnel: true
+    posture_tag: "EMS-ZTNA-Corporate-Compliant"   # EMS ZTNA tag that must match before tunnel comes up
+  # Ordered so the site with the lowest id is "side A" of every tunnel pair.
+  vlans:
+    # id: [name, role, description, dhcp?, internet?, cross_site?]
+    - {id: 10,  name: MGMT,       desc: "Infrastructure management (switches, APs, iLO, UPS)", dhcp: true,  internet: true,  cross_site: false}
+    - {id: 20,  name: STAFF,      desc: "Wired corporate staff (PM, design, sales, finance, HR)", dhcp: true, internet: true, cross_site: true}
+    - {id: 30,  name: DEV,        desc: "Developers (web + mobile engineering workstations)",  dhcp: true,  internet: true,  cross_site: true}
+    - {id: 40,  name: SERVERS,    desc: "Domain controllers, file, build/CI, Git mirror, staging", dhcp: false, internet: true,  cross_site: true}
+    - {id: 50,  name: VOICE,      desc: "IP phones / video conferencing",                       dhcp: true,  internet: true,  cross_site: true}
+    - {id: 60,  name: PRINT_IOT,  desc: "Printers, meeting-room displays, IoT",                 dhcp: true,  internet: false, cross_site: false}
+    - {id: 70,  name: GUEST,      desc: "Guest Wi-Fi - internet only, isolated",                dhcp: true,  internet: true,  cross_site: false, type: ssid, ssid: "Acme-Guest"}
+    - {id: 80,  name: DEVICE_LAB, desc: "Mobile test devices (iOS/Android) - internet + staging", dhcp: true, internet: true, cross_site: false}
+    - {id: 90,  name: CCTV,       desc: "Cameras / access control - NVR only, no internet",     dhcp: true,  internet: false, cross_site: false}
+    - {id: 100, name: CORP_WIFI,  desc: "Corporate Wi-Fi (802.1X/WPA3-Enterprise)",              dhcp: true,  internet: true,  cross_site: true, prefix: 23, type: ssid, ssid: "Acme-Corp"}
+
+sites:
+  - id: 1
+    code: LON
+    name: London
+    country: UK
+    timezone_note: "Europe/London"
+    users: 30
+    model: FG-70G
+    ha: false
+    supernet: "10.10.0.0/16"
+    loopback: "10.255.255.1"
+    fortilink_net: "10.10.1.0/24"
+    vpn_pool: "10.10.200.0/24"
+    dc_ips: ["10.10.40.10"]
+    wan:
+      wan1: {isp: "ISP-A (fibre)",   ip: "203.0.113.10/29",  gw: "203.0.113.9",   bw_mbps: 1000}   # CHANGE
+      wan2: {isp: "ISP-B (FTTC/5G)", ip: "198.51.100.10/29", gw: "198.51.100.9",  bw_mbps: 300}    # CHANGE
+    fortilink_ports: ["internal1", "internal2"]
+    switches: [{model: FS-148F-FPOE, qty: 1}]
+    aps: {model: FAP-231K, qty: 3}
+
+  - id: 2
+    code: BEY
+    name: Beirut
+    country: LB
+    timezone_note: "Asia/Beirut"
+    users: 70
+    model: FG-90G
+    ha: true                  # A-P cluster: largest office + least stable power/ISP environment
+    ha_hbdev: ["internal7", "internal8"]   # CHANGE to the two free ports cabled back-to-back
+    supernet: "10.20.0.0/16"
+    loopback: "10.255.255.2"
+    fortilink_net: "10.20.1.0/24"
+    vpn_pool: "10.20.200.0/24"
+    dc_ips: ["10.20.40.10", "10.20.40.11"]
+    wan:
+      wan1: {isp: "ISP-A (fibre)",      ip: "203.0.113.20/29",  gw: "203.0.113.17",  bw_mbps: 500}   # CHANGE
+      wan2: {isp: "ISP-B (fixed wireless/5G)", ip: "198.51.100.20/29", gw: "198.51.100.17", bw_mbps: 200}   # CHANGE
+    fortilink_ports: ["x1", "x2"]
+    switches: [{model: FS-148F-FPOE, qty: 2}, {model: FS-124F-POE, qty: 1}]
+    aps: {model: FAP-231K, qty: 6}
+
+  - id: 3
+    code: DXB
+    name: Dubai
+    country: AE
+    timezone_note: "Asia/Dubai"
+    users: 40
+    model: FG-90G
+    ha: false
+    supernet: "10.30.0.0/16"
+    loopback: "10.255.255.3"
+    fortilink_net: "10.30.1.0/24"
+    vpn_pool: "10.30.200.0/24"
+    dc_ips: ["10.30.40.10"]
+    wan:
+      wan1: {isp: "ISP-A (fibre)",   ip: "203.0.113.30/29",  gw: "203.0.113.25",  bw_mbps: 1000}  # CHANGE
+      wan2: {isp: "ISP-B (fibre/5G)", ip: "198.51.100.30/29", gw: "198.51.100.25", bw_mbps: 500}   # CHANGE
+    fortilink_ports: ["x1", "x2"]
+    switches: [{model: FS-148F-FPOE, qty: 1}, {model: FS-124F-POE, qty: 1}]   # 124F added after port-capacity test failed
+    aps: {model: FAP-231K, qty: 4}

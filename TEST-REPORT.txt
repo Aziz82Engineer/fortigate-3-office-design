@@ -1,0 +1,230 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+rootdir: /home/claude/fortigate-3-office-design
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1
+collecting ... collected 220 items
+
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[BEY-fortigate.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[BEY-fortiswitch-ports.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[BEY-post-ems.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[DXB-fortigate.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[DXB-fortiswitch-ports.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[DXB-post-ems.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[LON-fortigate.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[LON-fortiswitch-ports.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_cli_grammar_is_balanced[LON-post-ems.conf] PASSED
+tests/test_01_syntax_and_integrity.py::test_parser_rejects_broken_cli PASSED
+tests/test_01_syntax_and_integrity.py::test_no_ssl_vpn_anywhere PASSED
+tests/test_01_syntax_and_integrity.py::test_policy_names_unique_and_ids_sequential PASSED
+tests/test_01_syntax_and_integrity.py::test_policy_references_resolve PASSED
+tests/test_01_syntax_and_integrity.py::test_address_groups_resolve_and_have_no_loops PASSED
+tests/test_01_syntax_and_integrity.py::test_service_groups_resolve PASSED
+tests/test_01_syntax_and_integrity.py::test_sdwan_references_resolve PASSED
+tests/test_01_syntax_and_integrity.py::test_dhcp_scopes_are_consistent PASSED
+tests/test_01_syntax_and_integrity.py::test_every_lan_interface_exists_with_right_gateway PASSED
+tests/test_01_syntax_and_integrity.py::test_predefined_assumptions_are_documented PASSED
+tests/test_02_addressing_vpn_routing.py::test_no_overlapping_subnets_anywhere PASSED
+tests/test_02_addressing_vpn_routing.py::test_site_subnets_sit_inside_their_summary PASSED
+tests/test_02_addressing_vpn_routing.py::test_vpn_pools_avoid_common_home_ranges PASSED
+tests/test_02_addressing_vpn_routing.py::test_wan_gateways_are_in_wan_subnet PASSED
+tests/test_02_addressing_vpn_routing.py::test_full_mesh_has_4_tunnels_per_pair PASSED
+tests/test_02_addressing_vpn_routing.py::test_ipsec_tunnels_are_mirror_images PASSED
+tests/test_02_addressing_vpn_routing.py::test_unique_psk_per_tunnel PASSED
+tests/test_02_addressing_vpn_routing.py::test_bgp_full_mesh PASSED
+tests/test_02_addressing_vpn_routing.py::test_bgp_network_has_matching_rib_route PASSED
+tests/test_02_addressing_vpn_routing.py::test_loopback_reachability_over_every_tunnel PASSED
+tests/test_02_addressing_vpn_routing.py::test_peers_accept_bgp_and_probes_on_loopback PASSED
+tests/test_02_addressing_vpn_routing.py::test_remote_access_gateways PASSED
+tests/test_02_addressing_vpn_routing.py::test_vpn_users_have_mfa_and_correct_role PASSED
+tests/test_02_addressing_vpn_routing.py::test_ldap_uses_ldaps PASSED
+tests/test_03_security_and_traffic.py::test_no_admin_access_on_wan PASSED
+tests/test_03_security_and_traffic.py::test_admin_access_only_on_mgmt_and_trusted_hosts PASSED
+tests/test_03_security_and_traffic.py::test_global_hardening PASSED
+tests/test_03_security_and_traffic.py::test_every_policy_logs_and_internet_policies_are_inspected PASSED
+tests/test_03_security_and_traffic.py::test_no_any_any_any_rules PASSED
+tests/test_03_security_and_traffic.py::test_isolated_segments_never_reach_overlay PASSED
+tests/test_03_security_and_traffic.py::test_guest_wifi_isolation PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff browses web-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff browses web-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff browses web-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff reaches DC file share-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff reaches DC file share-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff reaches DC file share-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server SSH-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server SSH-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server SSH-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server RDP-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server RDP-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from server RDP-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from dev desktops-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from dev desktops-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff blocked from dev desktops-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[wifi user logs on to AD-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[wifi user logs on to AD-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[wifi user logs on to AD-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev SSH to build server-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev SSH to build server-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev SSH to build server-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev pushes to Git over SSH-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev pushes to Git over SSH-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev pushes to Git over SSH-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev debugs phone via adb-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev debugs phone via adb-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[dev debugs phone via adb-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest browses web-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest browses web-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest browses web-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest DNS-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest DNS-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest DNS-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot send SMTP spam-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot send SMTP spam-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot send SMTP spam-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch servers-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch servers-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch servers-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach intranet web-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach intranet web-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach intranet web-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch staff-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch staff-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot touch staff-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach other office-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach other office-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[guest cannot reach other office-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone hits staging API-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone hits staging API-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone hits staging API-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach DC SMB-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach DC SMB-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach DC SMB-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach staff-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach staff-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone cannot reach staff-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone reaches app stores-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone reaches app stores-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[test phone reaches app stores-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera streams to NVR-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera streams to NVR-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera streams to NVR-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach internet-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach internet-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach internet-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach DC SMB-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach DC SMB-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[camera cannot reach DC SMB-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer syncs time-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer syncs time-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer syncs time-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer cannot phone home-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer cannot phone home-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[printer cannot phone home-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff prints-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff prints-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[staff prints-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[non-IT staff blocked from MGMT-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[non-IT staff blocked from MGMT-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[non-IT staff blocked from MGMT-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[IT admin (FSSO) manages switch-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[IT admin (FSSO) manages switch-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[IT admin (FSSO) manages switch-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff opens file share-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff opens file share-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff opens file share-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from SSH-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from SSH-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from SSH-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN dev SSH to build server-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN dev SSH to build server-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN dev SSH to build server-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from MGMT-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from MGMT-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN staff blocked from MGMT-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN IT manages switches-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN IT manages switches-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[VPN IT manages switches-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[typo'd private IP never leaks-LON] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[typo'd private IP never leaks-BEY] PASSED
+tests/test_03_security_and_traffic.py::test_traffic_matrix[typo'd private IP never leaks-DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[staff -> remote file share-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[dev -> remote dev box-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[voice -> remote phone-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[wifi -> remote intranet-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[lab -> remote staging-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[cctv -> remote NVR-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[iot -> remote-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[anyone -> remote MGMT-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote share-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN staff -> remote SSH-DXB->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-LON->BEY] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-LON->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-BEY->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-BEY->DXB] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-DXB->LON] PASSED
+tests/test_03_security_and_traffic.py::test_inter_office_matrix[VPN dev -> remote SSH-DXB->BEY] PASSED
+tests/test_04_resilience_and_sizing.py::test_every_office_pair_survives_any_single_isp_loss_per_site PASSED
+tests/test_04_resilience_and_sizing.py::test_sdwan_rules_steer_to_a_live_tunnel[healthy] PASSED
+tests/test_04_resilience_and_sizing.py::test_sdwan_rules_steer_to_a_live_tunnel[single] PASSED
+tests/test_04_resilience_and_sizing.py::test_sdwan_rules_steer_to_a_live_tunnel[cross] PASSED
+tests/test_04_resilience_and_sizing.py::test_sla_degradation_moves_traffic_before_failure PASSED
+tests/test_04_resilience_and_sizing.py::test_guest_and_voice_internet_steering PASSED
+tests/test_04_resilience_and_sizing.py::test_health_checks_cover_exactly_their_tunnels PASSED
+tests/test_04_resilience_and_sizing.py::test_overlay_outage_fails_closed_not_to_internet PASSED
+tests/test_04_resilience_and_sizing.py::test_ha_only_where_designed PASSED
+tests/test_04_resilience_and_sizing.py::test_fabric_topology PASSED
+tests/test_04_resilience_and_sizing.py::test_firewall_sizing PASSED
+tests/test_04_resilience_and_sizing.py::test_switch_port_capacity PASSED
+
+============================= 220 passed in 0.53s ==============================

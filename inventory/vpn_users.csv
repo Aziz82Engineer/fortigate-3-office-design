@@ -1,0 +1,10 @@
+username,email,role,home_site
+# Export from AD: Get-ADGroupMember VPN-* | Get-ADUser -Properties mail  (role = Staff | Developers | IT)
+# home_site = the office whose FortiGate is the user's primary VPN gateway (another office is the backup gateway)
+n.saad,n.saad@acmedigital.com,IT,BEY
+r.haddad,r.haddad@acmedigital.com,Developers,BEY
+m.khoury,m.khoury@acmedigital.com,Staff,BEY
+j.smith,j.smith@acmedigital.com,Developers,LON
+e.jones,e.jones@acmedigital.com,Staff,LON
+s.alnuaimi,s.alnuaimi@acmedigital.com,Developers,DXB
+f.rahman,f.rahman@acmedigital.com,Staff,DXB

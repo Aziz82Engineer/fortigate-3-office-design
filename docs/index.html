@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FortiGate 3-Office Design</title>
+<meta name="description" content="Fortinet Security Fabric for three offices (London, Beirut, Dubai): full-mesh SD-WAN, IKEv2 remote access with MFA, 10-segment VLAN plan, generated FortiOS configs and 220 automated tests.">
+<meta property="og:title" content="FortiGate 3-Office Design">
+<meta property="og:description" content="Full-mesh SD-WAN, IKEv2 + MFA remote access and segmented LANs for London, Beirut and Dubai, generated as code and tested.">
+<meta property="og:image" content="network-diagram.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --ink: #14171c; --muted: #5a6370; --line: #dde1e6;
+    --accent: #d93a2b; --accent-soft: #fbeae8; --blue: #2f6fdb; --code: #eef1f4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b0e12; --surface: #12161c; --ink: #e8ecf1; --muted: #98a2ae; --line: #252c35;
+            --accent: #ff5a47; --accent-soft: #2a1513; --blue: #5b93ff; --code: #1a2028; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.6 "IBM Plex Sans", system-ui, sans-serif; }
+  code, .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .9em; }
+  code { background: var(--code); padding: .1em .35em; border-radius: 4px; }
+  a { color: var(--blue); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 64px 0 32px; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: .08em;
+             text-transform: uppercase; color: var(--accent); }
+  h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.1; margin: 12px 0 16px; letter-spacing: -.02em; }
+  .lead { font-size: 19px; color: var(--muted); max-width: 720px; margin: 0; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px;
+         font-weight: 600; text-decoration: none; border: 1px solid var(--line); color: var(--ink);
+         background: var(--surface); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line);
+           border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 40px 0; }
+  .stat { background: var(--surface); padding: 20px; }
+  .stat b { display: block; font-size: 32px; line-height: 1; letter-spacing: -.02em; }
+  .stat span { color: var(--muted); font-size: 14px; }
+  section { padding: 40px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-size: 24px; margin: 0 0 8px; letter-spacing: -.01em; }
+  h2 + p { color: var(--muted); margin-top: 0; }
+  .figure { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-top: 20px; }
+  .figure img { width: 100%; height: auto; display: block; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .tag { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 12px;
+         color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 2px 6px; margin-bottom: 10px; }
+  .table-wrap { overflow-x: auto; margin-top: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 620px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  th { font-weight: 600; color: var(--muted); font-size: 13px; }
+  tr:last-child td { border-bottom: 0; }
+  td.mono { white-space: nowrap; }
+  .yes { color: #1f8a4c; } .no { color: var(--accent); }
+  @media (prefers-color-scheme: dark) { .yes { color: #3fc47a; } }
+  pre { background: var(--code); border-radius: 10px; padding: 16px; overflow-x: auto; font-size: 13.5px; margin: 20px 0 0; }
+  .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .stack span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+  footer { padding: 32px 0 56px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 720px) {
+    header { padding-top: 40px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Network security · Fortinet</div>
+    <h1>One Security Fabric for London, Beirut and Dubai</h1>
+    <p class="lead">A complete FortiGate design for a 140-person web and mobile studio: full-mesh SD-WAN over two ISPs per office, MFA-protected remote access for home workers, and ten isolated segments per office. Every config is generated from one inventory file and checked by 220 automated tests.</p>
+    <div class="cta">
+      <a class="btn primary" id="repo-link" href="https://github.com/">View the code on GitHub</a>
+      <a class="btn" id="design-link" href="https://github.com/">Read the design document</a>
+    </div>
+  </header>
+
+  <div class="stats" aria-label="Project at a glance">
+    <div class="stat"><b>3</b><span>offices, 140 people</span></div>
+    <div class="stat"><b>12</b><span>IPsec tunnels in a full mesh</span></div>
+    <div class="stat"><b>220</b><span>automated tests passing</span></div>
+    <div class="stat"><b>12/12</b><span>injected faults caught</span></div>
+  </div>
+
+  <section>
+    <h2>Topology</h2>
+    <p>Each office pair is joined by four tunnels, one per ISP combination, so any office can lose either ISP and still reach every other office.</p>
+    <div class="figure"><a href="network-diagram.svg" title="Open full size"><img src="network-diagram.svg" alt="Network diagram: Beirut, London and Dubai joined by a full mesh of IPsec tunnels, managed from the Fortinet cloud, with home workers connecting over FortiClient"></a></div>
+  </section>
+
+  <section>
+    <h2>Key design decisions</h2>
+    <p>Each choice is tied to a requirement and verified in the test suite.</p>
+    <div class="grid">
+      <div class="card"><div class="tag">SD-WAN</div><h3>Full mesh, not hub-and-spoke</h3><p>With three offices, a mesh removes the hub as a single point of failure. iBGP on loopbacks carries routes; SLA probes move traffic before a link fails.</p></div>
+      <div class="card"><div class="tag">Remote access</div><h3>IKEv2 IPsec instead of SSL VPN</h3><p>FortiOS 7.6.3 removed SSL VPN tunnel mode. Users sign in with AD over EAP-TTLS plus FortiToken push, and only EMS-compliant laptops can connect.</p></div>
+      <div class="card"><div class="tag">Segmentation</div><h3>Ten segments, same plan everywhere</h3><p>Guests, test phones, printers and cameras never reach staff or other offices. VLAN numbers match across offices; the second octet names the office.</p></div>
+      <div class="card"><div class="tag">Fail closed</div><h3>No leaks when tunnels drop</h3><p>Blackhole routes for all private ranges mean internal traffic is dropped, never sent unencrypted to the internet, if every tunnel to an office goes down.</p></div>
+      <div class="card"><div class="tag">Inspection</div><h3>Deep for staff, certificate for developers</h3><p>Deep SSL inspection breaks Git, Xcode and Android tooling, so developer and lab segments get certificate inspection with IPS, AV and DNS filtering.</p></div>
+      <div class="card"><div class="tag">Operations</div><h3>Cloud-managed, nothing on-prem</h3><p>FortiManager, FortiAnalyzer, FortiClient EMS and FortiIdentity Cloud run the fabric; Beirut runs an HA pair as the Fabric root.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Segmentation plan</h2>
+    <p>Identical VLAN IDs in every office; the gateway is always .1.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>VLAN</th><th>Segment</th><th>Beirut subnet</th><th>Internet</th><th>Other offices</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">10</td><td>Management</td><td class="mono">10.20.10.0/24</td><td>Updates only</td><td class="no">No</td></tr>
+          <tr><td class="mono">20</td><td>Staff (wired)</td><td class="mono">10.20.20.0/24</td><td>Deep inspection</td><td class="yes">Yes</td></tr>
+          <tr><td class="mono">30</td><td>Developers</td><td class="mono">10.20.30.0/24</td><td>Certificate inspection</td><td class="yes">Yes</td></tr>
+          <tr><td class="mono">40</td><td>Servers</td><td class="mono">10.20.40.0/24</td><td>AV + IPS</td><td class="yes">Yes</td></tr>
+          <tr><td class="mono">50</td><td>Voice</td><td class="mono">10.20.50.0/24</td><td>Yes</td><td class="yes">Yes</td></tr>
+          <tr><td class="mono">60</td><td>Printers / IoT</td><td class="mono">10.20.60.0/24</td><td>NTP only</td><td class="no">No</td></tr>
+          <tr><td class="mono">70</td><td>Guest Wi-Fi</td><td class="mono">10.20.70.0/24</td><td>Web only</td><td class="no">No</td></tr>
+          <tr><td class="mono">80</td><td>Mobile test devices</td><td class="mono">10.20.80.0/24</td><td>Full UTM</td><td class="no">No</td></tr>
+          <tr><td class="mono">90</td><td>Cameras</td><td class="mono">10.20.90.0/24</td><td class="no">No</td><td class="no">No</td></tr>
+          <tr><td class="mono">100</td><td>Corporate Wi-Fi (802.1X)</td><td class="mono">10.20.100.0/23</td><td>Deep inspection</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Infrastructure as code, tested</h2>
+    <p>A Python generator turns one YAML inventory into FortiOS 7.6 CLI scripts. A parser and policy simulator then walks real traffic through both firewalls of every flow and replays all 27 ISP-failure combinations.</p>
+<pre class="mono">$ python3 generator/generate.py
+generated configs for LON, BEY, DXB -> configs/
+$ python3 -m pytest
+220 passed in 0.6s
+$ python3 tools/mutation_test.py
+12/12 injected faults detected</pre>
+    <div class="stack">
+      <span>FortiGate 70G / 90G</span><span>FortiOS 7.6.7</span><span>SD-WAN</span><span>IPsec IKEv2</span><span>iBGP</span>
+      <span>FortiSwitch</span><span>FortiAP Wi-Fi 7</span><span>FortiClient EMS</span><span>FortiToken</span><span>Active Directory</span>
+      <span>Python</span><span>pytest</span><span>GitHub Actions</span>
+    </div>
+  </section>
+
+  <footer>
+    Reference design with example addressing (RFC 5737 public IPs, fictional company). Secrets in the repository are public demo values.
+  </footer>
+</div>
+<script>
+  // Build GitHub links from the Pages URL (user.github.io/repo/), so no username is hard-coded.
+  (function () {
+    var host = location.hostname, parts = location.pathname.split('/').filter(Boolean);
+    if (/\.github\.io$/.test(host) && parts.length) {
+      var repo = 'https://github.com/' + host.replace('.github.io', '') + '/' + parts[0];
+      document.getElementById('repo-link').href = repo;
+      document.getElementById('design-link').href = repo + '/blob/main/DESIGN.md';
+    }
+  })();
+</script>
+</body>
+</html>

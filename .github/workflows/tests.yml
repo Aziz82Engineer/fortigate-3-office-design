@@ -1,0 +1,21 @@
+name: tests
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Configs in the repo match the inventory
+        run: |
+          python3 generator/generate.py
+          git diff --exit-code configs/
+      - name: Test suite
+        run: python3 -m pytest -q
+      - name: Mutation test (the suite must catch injected faults)
+        run: python3 tools/mutation_test.py

@@ -1,0 +1,15 @@
+mutation                                      result
+PSK typo on one tunnel end                    CAUGHT by test_ipsec_tunnels_are_mirror_images
+Wrong remote-gw on a tunnel                   CAUGHT by test_ipsec_tunnels_are_mirror_images
+Guest policy widened to the server VLAN       CAUGHT by test_isolated_segments_never_reach_overlay
+HTTPS admin opened on WAN                     CAUGHT by test_no_admin_access_on_wan
+RFC1918 blackhole removed                     CAUGHT by test_traffic_matrix[typo'd
+MFA dropped for one VPN user                  CAUGHT by test_vpn_users_have_mfa_and_correct_role
+Overlapping VLAN subnet                       CAUGHT by test_every_lan_interface_exists_with_right_ga
+UTM removed from staff internet policy        CAUGHT by test_policy_references_resolve
+Missing 'end' (broken script)                 CAUGHT by test_cli_grammar_is_balanced[BEY-fortigate.co
+BGP neighbor removed                          CAUGHT by test_bgp_full_mesh
+Policy references undefined address           CAUGHT by test_policy_references_resolve
+Camera given internet                         CAUGHT by test_traffic_matrix[camera
+
+12/12 injected faults detected
